@@ -1,13 +1,15 @@
 import Todo from './Todo'
 import {db} from '../Storage'
+import EmptyTodos from './EmptyTodos'
 import {useLiveQuery} from 'dexie-react-hooks'
 
 const TodoList = () => {
   const allTodos = useLiveQuery(
     () => db.todos.reverse().toArray()
   )
-  if (!allTodos) return null
-  const activeTodos = allTodos.filter(todo => !todo.completed && !todo.archived)
+  let activeTodos
+  if (allTodos) activeTodos = allTodos.filter(todo => !todo.completed && !todo.archived)
+  if (!allTodos || !activeTodos.length) return <EmptyTodos />
   return (
     <>
       {

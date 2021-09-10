@@ -1,6 +1,6 @@
-import {Container} from '@material-ui/core'
+import {Paper, Grid} from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { makeStyles } from '@material-ui/core/styles'
+import {makeStyles} from '@material-ui/core/styles'
 
 import Header from './Components/Header.jsx'
 import Composer from './Components/Composer.jsx'
@@ -13,7 +13,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2)
   },
   container: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(0, 2),
+    marginBottom: theme.spacing(5)
+  },
+  paper: {
+    marginTop: theme.spacing(-7)
   }
 }))
 
@@ -23,12 +27,16 @@ export default function SignIn() {
     <>
       <CssBaseline />
       <Header />
-      <Container maxWidth="sm" className={classes.container}>
-        <Composer />
-        <TodoList />
-        <CompletedTodos />
-        <ArchivedTodos />
-      </Container>
+      <Grid container justifyContent="center">
+        <Grid xs={12} sm={12} md={5} lg={5} xl={5} className={classes.container}>
+          <Paper className={classes.paper} elevation={15}>
+            <Composer />
+            <TodoList />
+            <CompletedTodos />
+            <ArchivedTodos />
+          </Paper>
+        </Grid>
+      </Grid>
     </>
   )
 }

@@ -19,8 +19,7 @@ import {addTodo} from '../Storage'
 
 const useStyles = makeStyles(theme => ({
   card: {
-    border: 'none',
-    marginTop: theme.spacing(-7)
+    border: 'none'
   },
   action: {
     display: 'flex',

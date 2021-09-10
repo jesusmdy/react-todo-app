@@ -169,7 +169,7 @@ const Todo = ({todo}) => {
         {
           expanded &&
           <CardContent>
-            <Typography component="pre" variant="subtitle2">{description}</Typography>
+            <Typography component="p" variant="subtitle2">{description}</Typography>
           </CardContent>
         }
         {
@@ -207,7 +207,7 @@ const Todo = ({todo}) => {
                 }
               </IconButton>
             }
-            <IconButton size="small" onClick={removeItem}>
+            <IconButton size="small" onClick={removeItem} color="inherit">
               <DeleteIcon />
             </IconButton>
           </CardActions>
