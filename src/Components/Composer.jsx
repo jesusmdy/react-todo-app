@@ -1,12 +1,11 @@
-import {Divider, Card, Chip, CardActions, CardContent, CardHeader} from '@material-ui/core'
-import {Avatar, Paper, IconButton, Button, Typography, Snackbar} from '@material-ui/core'
+import {Divider, Card, Chip, CardActions, CardContent} from '@material-ui/core'
+import {Paper, IconButton, Button, Typography, Snackbar} from '@material-ui/core'
 import {FormControl, TextField, Checkbox} from '@material-ui/core'
 
 import DateFnsUtils from '@date-io/date-fns'
-import {formatDistance, subDays} from 'date-fns'
+import {formatDistance} from 'date-fns'
 import {DateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers'
 
-import Add from '@material-ui/icons/Add'
 import Event from '@material-ui/icons/Event'
 import Error from '@material-ui/icons/Error'
 import ErrorOutline from '@material-ui/icons/ErrorOutline'
@@ -14,14 +13,14 @@ import Edit from '@material-ui/icons/Edit'
 
 import {makeStyles} from '@material-ui/core/styles'
 
-import {useEffect, useState} from  'react'
+import {useState} from  'react'
 
 import {addTodo} from '../Storage'
-import useTimeAgo from '../Hooks/useTimeAgo'
 
 const useStyles = makeStyles(theme => ({
   card: {
-    border: 'none'
+    border: 'none',
+    marginTop: theme.spacing(-7)
   },
   action: {
     display: 'flex',

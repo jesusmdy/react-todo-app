@@ -61,7 +61,7 @@ const ArchivedTodos = () => {
         <Paper className={classes.inner}>
           {
             archivedTodos.map(todo => (
-              <Todo todo={todo} id={todo.id} />
+              <Todo key={todo.id} todo={todo} id={todo.id} />
             ))
           }
         </Paper>

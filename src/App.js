@@ -1,4 +1,4 @@
-import {Container, Typography} from '@material-ui/core'
+import {Container} from '@material-ui/core'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -13,20 +13,22 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2)
   },
   container: {
-    padding: 0
+    padding: theme.spacing(2)
   }
 }))
 
 export default function SignIn() {
   const classes = useStyles()
   return (
-    <Container maxWidth="sm" className={classes.container}>
+    <>
       <CssBaseline />
       <Header />
-      <Composer />
-      <TodoList />
-      <CompletedTodos />
-      <ArchivedTodos />
-    </Container>
+      <Container maxWidth="sm" className={classes.container}>
+        <Composer />
+        <TodoList />
+        <CompletedTodos />
+        <ArchivedTodos />
+      </Container>
+    </>
   )
 }

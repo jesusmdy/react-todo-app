@@ -1,17 +1,23 @@
-import {Box, Typography} from '@material-ui/core'
+import {
+  Grid,
+  Box,
+  Typography
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 const useStyles = makeStyles(theme => ({
   header: {
     backgroundImage: `url('/gradient.jpg')`,
-    height: '30vh',
+    height: '35vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    padding: theme.spacing(2),
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
-    color: '#ffffff'
+    color: '#ffffff',
+  },
+  text: {
+    padding: theme.spacing(10, 2)
   }
 }))
 const Header = () => {
@@ -38,8 +44,12 @@ const Header = () => {
   } 
   return (
     <Box className={classes.header}>
-      <Typography variant="h3">{formatGreet()}</Typography>
-      <Typography variant="h5">{formatDate()}</Typography>
+      <Grid container justifyContent="center" alignItems="center">
+        <Grid item xs={12} sm={12} md={5} lg={5} xl={5} className={classes.text}>
+          <Typography variant="h3">{formatGreet()}</Typography>
+          <Typography variant="h5">{formatDate()}</Typography>
+        </Grid>
+      </Grid>
     </Box>
   )
 }

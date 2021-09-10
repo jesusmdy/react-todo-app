@@ -1,18 +1,16 @@
-import {useState, useEffect, useRef} from 'react'
+import {useState, useEffect} from 'react'
 
 // List
 import {
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  ListItemSecondaryAction
 } from '@material-ui/core'
 import {
   Card,
   CardActions,
-  CardContent,
-  CardHeader,
-  CardActionArea,
-  Avatar
+  CardContent
 } from '@material-ui/core'
 
 // Pieces
@@ -21,17 +19,16 @@ import {
   Divider,
   Chip,
   Checkbox,
-  Button,
   IconButton
 } from '@material-ui/core'
 
 // Icons
 import Event from '@material-ui/icons/Event'
+import ExpandMore from '@material-ui/icons/ExpandMore'
+import ExpandLess from '@material-ui/icons/ExpandLess'
 import DeleteIcon from '@material-ui/icons/Delete'
 import ArchiveIcon from '@material-ui/icons/Archive'
 import UnarchiveIcon from '@material-ui/icons/Unarchive'
-import EditIcon from '@material-ui/icons/Edit'
-import DoneIcon from '@material-ui/icons/Done'
 import NewReleasesIcon from '@material-ui/icons/NewReleases'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
@@ -42,14 +39,15 @@ import {markAsCompleted, archiveItem, deleteItem} from '../Storage'
 import {makeStyles} from '@material-ui/core/styles'
 import {lightGreen} from '@material-ui/core/colors'
 import {Typography} from '@material-ui/core'
-import {formatDistance, subDays} from 'date-fns'
+import {formatDistance} from 'date-fns'
 import clsx from 'clsx'
 
 
 const useStyles = makeStyles(theme => ({
   card: {
     border: 'none',
-    borderRadius: 0
+    borderRadius: 0,
+    listStyle: 'none'
   },
   completed: {
     background: lightGreen[100],
@@ -60,10 +58,7 @@ const useStyles = makeStyles(theme => ({
     color: '#777'
   },
   item: {
-    paddingBottom: 0
-  },
-  fakeItem: {
-    paddingTop: 0
+    listStyle: 'none'
   },
   chip: {
     borderRadius: 3,
@@ -92,13 +87,13 @@ const useStyles = makeStyles(theme => ({
 
 const Todo = ({todo}) => {
   const classes = useStyles()
-  const {id, title, description, completed, important, archived, dueDate, date} = todo
+  const {id, title, description, completed, important, archived, dueDate} = todo
   const [checked, setChecked] = useState(false)
   const [expanded, setExpanded] = useState(false)
 
   useEffect(() => {
     setChecked(completed)
-  })
+  }, [completed])
 
   const handleClick = () => {
     markAsCompleted(id, !completed)
@@ -116,28 +111,28 @@ const Todo = ({todo}) => {
     setExpanded(false)
   }
   return (
-    <Card
-      className={
-        clsx(
-          classes.card,
-          completed && classes.completed,
-          archived && classes.archived
-        )
-      }
-      variant="outlined"
-    >
-      <ListItem className={classes.item}>
-        <ListItemIcon>
-          <Checkbox
-            disabled={archived}
-            onClick={handleClick}
-            checked={checked}
-            onChange={handleClick}
-            icon={<RadioButtonUncheckedIcon />}
-            checkedIcon={<CheckCircleIcon />}
-          />
-        </ListItemIcon>
-        <ClickAwayListener onClickAway={handleClickAway}>
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Card
+        className={
+          clsx(
+            classes.card,
+            completed && classes.completed,
+            archived && classes.archived
+          )
+        }
+        variant="outlined"
+      >
+        <ListItem className={classes.item}>
+          <ListItemIcon>
+            <Checkbox
+              disabled={archived}
+              onClick={handleClick}
+              checked={checked}
+              onChange={handleClick}
+              icon={<RadioButtonUncheckedIcon />}
+              checkedIcon={<CheckCircleIcon />}
+            />
+          </ListItemIcon>
           <ListItemText
             primary={title}
             onClick={toggleExpanded}
@@ -146,7 +141,9 @@ const Todo = ({todo}) => {
                 <Typography component="span" variant="subtitle2" className={classes.description}>
                   {
                     !expanded &&
-                    <>{description}</>
+                    <Typography noWrap component="i" variant="subtitle2">
+                      {description}
+                    </Typography>
                   }
                   {
                     important &&
@@ -160,56 +157,64 @@ const Todo = ({todo}) => {
               </>
             }
           />
-        </ClickAwayListener>
-      </ListItem>
-      {
-        expanded &&
-        <CardContent>
-          <Typography component="pre" variant="subtitle2">{description}</Typography>
-        </CardContent>
-      }
-      {
-        expanded &&
-        <CardActions className={classes.actions}>
-          {
-            dueDate &&
-            <Chip
-              size="small"
-              color="primary"
-              variant="outlined"
-              className={classes.chip}
-              icon={<Event />}
-              label={formatDistance(dueDate, new Date(), { addSuffix: true })}
+          <ListItemSecondaryAction>
+            <Checkbox
+              checked={expanded}
+              onClick={toggleExpanded}
+              icon={<ExpandMore />}
+              checkedIcon={<ExpandLess />}
             />
-          }
-          {
-            important &&
-            <Chip
-              size="small"
-              variant="outlined"
-              className={classes.chip}
-              color="secondary"
-              icon={<NewReleasesIcon />}
-              label="Important"
-            />
-          }
-          {
-            !completed &&
-            <IconButton size="small" color={archived ? 'primary' : ''} onClick={toggleArchived}>
-              {
-                archived
-                ? <UnarchiveIcon />
-                : <ArchiveIcon />
-              }
+          </ListItemSecondaryAction>
+        </ListItem>
+        {
+          expanded &&
+          <CardContent>
+            <Typography component="pre" variant="subtitle2">{description}</Typography>
+          </CardContent>
+        }
+        {
+          expanded &&
+          <CardActions className={classes.actions}>
+            {
+              dueDate &&
+              <Chip
+                size="small"
+                color="primary"
+                variant="outlined"
+                className={classes.chip}
+                icon={<Event />}
+                label={formatDistance(dueDate, new Date(), { addSuffix: true })}
+              />
+            }
+            {
+              important &&
+              <Chip
+                size="small"
+                variant="outlined"
+                className={classes.chip}
+                color="secondary"
+                icon={<NewReleasesIcon />}
+                label="Important"
+              />
+            }
+            {
+              !completed &&
+              <IconButton size="small" color={archived ? 'primary' : 'inherit'} onClick={toggleArchived}>
+                {
+                  archived
+                  ? <UnarchiveIcon />
+                  : <ArchiveIcon />
+                }
+              </IconButton>
+            }
+            <IconButton size="small" onClick={removeItem}>
+              <DeleteIcon />
             </IconButton>
-          }
-          <IconButton size="small" onClick={removeItem}>
-            <DeleteIcon />
-          </IconButton>
-        </CardActions>
-      }
-      <Divider />
-    </Card>
+          </CardActions>
+        }
+        <Divider />
+      </Card>
+    </ClickAwayListener>
   )
 }
 

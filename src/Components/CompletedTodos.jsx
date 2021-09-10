@@ -61,7 +61,7 @@ const CompletedTodos = () => {
         <Paper className={classes.inner}>
           {
             completedTodos.map(todo => (
-              <Todo todo={todo} id={todo.id} />
+              <Todo key={todo.id} todo={todo} id={todo.id} />
             ))
           }
         </Paper>
