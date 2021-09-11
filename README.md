@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+# React To-Do App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is maded by learning react from zero
+Be aware of bad practices and innecesary code or statements.
+Give support if you have a suggestion and feel free to use this project anywhere for whatever.
 
 ## Available Scripts
 

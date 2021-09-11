@@ -7,6 +7,7 @@ import Composer from './Components/Composer.jsx'
 import TodoList from './Components/TodoList.jsx'
 import ArchivedTodos from './Components/ArchivedTodos.jsx'
 import CompletedTodos from './Components/CompletedTodos.jsx'
+import Info from './Components/Info.jsx'
 
 const useStyles = makeStyles((theme) => ({
   padding: {
@@ -35,6 +36,7 @@ export default function SignIn() {
             <CompletedTodos />
             <ArchivedTodos />
           </Paper>
+          <Info />
         </Grid>
       </Grid>
     </>
